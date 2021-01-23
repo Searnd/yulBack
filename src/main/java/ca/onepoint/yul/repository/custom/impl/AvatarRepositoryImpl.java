@@ -57,6 +57,8 @@ public class AvatarRepositoryImpl implements AvatarRepositoryCustom {
         avatarDto.setMain((Integer) avatar[5]);
         avatarDto.setX((Integer) avatar[6]);
         avatarDto.setY((Integer) avatar[7]);
+        avatarDto.setXdest((Integer) avatar[8]);
+        avatarDto.setYdest((Integer) avatar[9]);
         return avatarDto;
     }
 

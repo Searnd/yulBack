@@ -26,5 +26,8 @@ public class Avatar {
     private Integer x;
     @Column
     private Integer y;
-
+    @Column
+    private Integer xdest;
+    @Column
+    private Integer ydest;
 }

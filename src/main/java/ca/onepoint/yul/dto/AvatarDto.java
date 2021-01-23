@@ -12,4 +12,6 @@ public class AvatarDto {
     private Integer main;
     private Integer x;
     private Integer y;
+    private Integer xdest;
+    private Integer ydest;
 }

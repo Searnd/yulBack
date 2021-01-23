@@ -45,6 +45,8 @@ public class AvatarServiceImpl implements IAvatarService {
             avatarDto.setType(avatar.getType());
             avatarDto.setX(avatar.getX());
             avatarDto.setY(avatar.getY());
+            avatarDto.setXdest(avatar.getXdest());
+            avatarDto.setYdest(avatar.getYdest());
             avatarDtoList.add(avatarDto);
         }
         return avatarDtoList;
