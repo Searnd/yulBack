@@ -32,16 +32,16 @@ public class MoveUtil {
                             avatarDto.getX().equals(avatarDto.getXdest()) &&
                             avatarDto.getY().equals(avatarDto.getYdest())
             ) {
-                Coord newDest = coronaDestinations.get(0);
+                Coord newDest = MoveUtil.coronaDestinations.get(0);
                 avatarDto.setXdest(newDest.x);
                 avatarDto.setYdest(newDest.y);
-                coronaDestinations.remove(0);
+                MoveUtil.coronaDestinations.remove(0);
             }
         }
         Coord dist = MoveUtil.calcDistance(avatarDto);
         dist.x = getStepFromDistance(dist.x);
         dist.y = getStepFromDistance(dist.y);
-        if (dist.x > 0 || dist.y > 0) {
+        if (dist.x != 0 || dist.y != 0) {
             if (dist.x == 0) {
                 avatarDto.setY(dist.y + avatarDto.getY());
             } else if (dist.y == 0) {
