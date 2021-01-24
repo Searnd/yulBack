@@ -44,6 +44,7 @@ public class AvatarController {
     @CrossOrigin
     @GetMapping("/")
     public List<AvatarDto> findAllAvatars() {
+        MoveUtil.resetCoronaDestinations();
         return iAvatarService.getAllAvatars();
     }
 

@@ -7,9 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class MoveUtil {
-    static ArrayList<Coord> coronaDestinations = new ArrayList<Coord>(
-            Arrays.asList(new Coord(16, 14), new Coord(3, 21), new Coord(13, 18))
-    );
+    static ArrayList<Coord> coronaDestinations;
+
+    public static void resetCoronaDestinations() {
+        MoveUtil.coronaDestinations = new ArrayList<Coord>(
+                Arrays.asList(new Coord(16, 14), new Coord(3, 21), new Coord(13, 18))
+        );
+    }
 
     static Coord calcDistance(AvatarDto avatar) {
         Integer diffX = avatar.getXdest() - avatar.getX();
