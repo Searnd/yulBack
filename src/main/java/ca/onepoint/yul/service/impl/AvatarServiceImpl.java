@@ -70,14 +70,14 @@ public class AvatarServiceImpl implements IAvatarService, ApplicationListener<Tr
     public void resetPietons() {
         avatarRepository.removePedestrians();
         avatarRepository.removeCars();
-        PlacementUtil.addElement(avatarRepository, 15, 4);
+        PlacementUtil.addElement(avatarRepository, 15, 3);
         PlacementUtil.addElement(avatarRepository, 30, 6);
     }
 
     public void resetAvatars(ArrayList<LightCoord> coords) {
         avatarRepository.removeLights();
         avatarRepository.removeCars();
-        PlacementUtil.addElement(avatarRepository, 15, 4);
+        PlacementUtil.addElement(avatarRepository, 15, 3);
         PlacementUtil.addElement(avatarRepository, 30, 6);
         this.resetPietons();
         AtomicInteger i = new AtomicInteger();

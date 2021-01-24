@@ -33,7 +33,7 @@ public class PlacementUtil {
             String name = type.toString() + i;
             Coord startCoords = PlacementUtil.getRandomCoord();
             Coord destCoords = PlacementUtil.getRandomCoord();
-            if (4 == type) repo.addPedestrian(name, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
+            if (3 == type) repo.addPedestrian(name, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
             else repo.addCar(name, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
         }
     }

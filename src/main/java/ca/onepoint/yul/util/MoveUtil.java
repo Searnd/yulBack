@@ -72,7 +72,9 @@ public class MoveUtil {
         if (dist.x != 0 || dist.y != 0) {
             int nextX = dist.x + avatarDto.getX();
             int nextY = dist.y + avatarDto.getY();
-            if (isOverSteppable(nextX, nextY, avatarDto.getType(), mapDtos)) {
+            Integer type = avatarDto.getType();
+            boolean overSteppable = isOverSteppable(nextX, nextY, type, mapDtos);
+            if (overSteppable) {
                 moveAvatarToNextSquare(avatarDto, dist, nextX, nextY);
             }
         }
@@ -109,9 +111,10 @@ public class MoveUtil {
      * @param mapDtos the map on which the avatar is moving
      * */
     public static boolean isOverSteppable(int nextX, int nextY, int avatarType, List<MapDto> mapDtos) {
-        if (avatarType == 1 || avatarType == 3) {
+        if (avatarType == 2 || avatarType == 6) { // agent ou voiture
             SquareDto[][] squareDtos = mapDtos.get(0).getSquare();
-            return squareDtos[nextX][nextY].getValue() == 1;
+            return squareDtos[nextX][nextY].getValue() == 1
+            ;
         }
         return true;
     }
