@@ -15,7 +15,7 @@ public interface IAvatarService {
 
     List<AvatarDto> getAvatarsByType(Integer type);
 
-    void resetAvatars();
+    void resetAvatars(ArrayList<LightCoord> coords);
 
-    void resetLights(ArrayList<LightCoord> coords);
+    void resetPietons();
 }

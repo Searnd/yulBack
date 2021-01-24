@@ -61,15 +61,9 @@ public class AvatarController implements ApplicationListener<TrafficLightEvent> 
 
     @CrossOrigin
     @PutMapping("/reset-avatars")
-    public void resetAvatars() {
-        iAvatarService.resetAvatars();
-    }
-
-    @CrossOrigin
-    @PutMapping("/reset-lights")
     public ResponseEntity resetLights(@RequestBody ArrayList<LightCoord> coords) {
         if (coords.size() > 0) {
-            iAvatarService.resetLights(coords);
+            iAvatarService.resetAvatars(coords);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.badRequest().build();

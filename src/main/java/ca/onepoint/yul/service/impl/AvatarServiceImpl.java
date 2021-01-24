@@ -63,14 +63,14 @@ public class AvatarServiceImpl implements IAvatarService, ApplicationListener<Tr
         return mapAvatarToDto(avatarRepository.findByType(type));
     }
 
-    public void resetAvatars() {
+    public void resetPietons() {
         avatarRepository.removePedestrians();
-        avatarRepository.removeLights();
         PlacementUtil.addPietons(avatarRepository, 15);
     }
 
-    public void resetLights(ArrayList<LightCoord> coords) {
+    public void resetAvatars(ArrayList<LightCoord> coords) {
         avatarRepository.removeLights();
+        this.resetPietons();
         AtomicInteger i = new AtomicInteger();
         coords.forEach(coord -> {
             String redLight = "../assets/images/red-light.png";
@@ -81,6 +81,7 @@ public class AvatarServiceImpl implements IAvatarService, ApplicationListener<Tr
                 avatarRepository.addLight("light" + i.getAndIncrement(), 5, this._isVerticalGreen ? redLight : greenLight, coord.x, coord.y);
             }
         });
+        MoveUtil.avatarList = this.getAllAvatars();
     }
 
     private List<AvatarDto> mapAvatarToDto(List<Avatar> avatarIterable) {
