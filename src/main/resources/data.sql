@@ -42,4 +42,4 @@ values ('Montreal', '[[{"value":"0","image":"../assets/images/toit.png"},{"value
 
 
 INSERT INTO type(name)
-values ('principal'), ('police'), ('pieton');
+values ('principal'), ('police'), ('pieton'), ('light');

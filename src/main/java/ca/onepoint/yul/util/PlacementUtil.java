@@ -1,7 +1,15 @@
 package ca.onepoint.yul.util;
 
+import ca.onepoint.yul.entity.Avatar;
 import ca.onepoint.yul.entity.Coord;
+import ca.onepoint.yul.entity.Map;
 import ca.onepoint.yul.repository.AvatarRepository;
+import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 public class PlacementUtil {
     public static Coord getRandomCoord() {
@@ -17,5 +25,9 @@ public class PlacementUtil {
             Coord destCoords = PlacementUtil.getRandomCoord();
             repo.addPedestrian(pietonName, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
         }
+    }
+
+    public static void addLights(AvatarRepository repo) {
+
     }
 }

@@ -1,6 +1,7 @@
 package ca.onepoint.yul.controller;
 
 import ca.onepoint.yul.dto.AvatarDto;
+import ca.onepoint.yul.entity.Coord;
 import ca.onepoint.yul.service.IAvatarService;
 import ca.onepoint.yul.util.MoveUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,10 +10,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -52,6 +55,16 @@ public class AvatarController {
     @PutMapping("/reset-avatars")
     public void resetAvatars() {
         iAvatarService.resetAvatars();
+    }
+
+    @CrossOrigin
+    @PutMapping("/reset-lights")
+    public ResponseEntity resetLights(@RequestBody ArrayList<Coord> coords) {
+        if (coords.size() > 0) {
+            iAvatarService.resetLights(coords);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     @CrossOrigin

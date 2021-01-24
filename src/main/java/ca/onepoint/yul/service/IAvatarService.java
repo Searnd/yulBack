@@ -1,7 +1,9 @@
 package ca.onepoint.yul.service;
 
 import ca.onepoint.yul.dto.AvatarDto;
+import ca.onepoint.yul.entity.Coord;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IAvatarService {
@@ -13,4 +15,6 @@ public interface IAvatarService {
     List<AvatarDto> getAvatarsByType(Integer type);
 
     void resetAvatars();
+
+    void resetLights(ArrayList<Coord> coords);
 }
