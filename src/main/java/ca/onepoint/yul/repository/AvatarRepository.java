@@ -33,8 +33,8 @@ public interface AvatarRepository extends CrudRepository<Avatar, Long>, AvatarRe
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO avatar(name, type, image, waiting, main, x, y, xdest, ydest) values (:name, 4, '../assets/images/red-light.png', 0, 0, :x, :y, :x, :y)", nativeQuery = true)
-    void addLight(@Param("name") String name, @Param("x") int x, @Param("y") int y);
+    @Query(value = "INSERT INTO avatar(name, type, image, waiting, main, x, y, xdest, ydest) values (:name, :type, :image, 0, 0, :x, :y, :x, :y)", nativeQuery = true)
+    void addLight(@Param("name") String name, @Param("type") int type, @Param("image") String image, @Param("x") int x, @Param("y") int y);
 
     @Modifying
     @Transactional
@@ -43,7 +43,7 @@ public interface AvatarRepository extends CrudRepository<Avatar, Long>, AvatarRe
 
     @Modifying
     @Transactional
-    @Query(value ="DELETE FROM avatar WHERE type = 4", nativeQuery = true)
+    @Query(value ="DELETE FROM avatar WHERE type = 4 OR type = 5", nativeQuery = true)
     void removeLights();
 
 }

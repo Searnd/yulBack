@@ -3,6 +3,7 @@ package ca.onepoint.yul.service.impl;
 import ca.onepoint.yul.dto.AvatarDto;
 import ca.onepoint.yul.entity.Avatar;
 import ca.onepoint.yul.entity.Coord;
+import ca.onepoint.yul.entity.LightCoord;
 import ca.onepoint.yul.repository.AvatarRepository;
 import ca.onepoint.yul.service.IAvatarService;
 import ca.onepoint.yul.util.PlacementUtil;
@@ -48,11 +49,17 @@ public class AvatarServiceImpl implements IAvatarService {
         PlacementUtil.addPietons(avatarRepository, 15);
     }
 
-    public void resetLights(ArrayList<Coord> coords) {
+    public void resetLights(ArrayList<LightCoord> coords) {
         avatarRepository.removeLights();
         AtomicInteger i = new AtomicInteger();
         coords.forEach(coord -> {
-            avatarRepository.addLight("light" + i.getAndIncrement(), coord.x, coord.y);
+            String redLight = "../assets/images/red-light.png";
+            String greenLight = "../assets/images/green-light.png";
+            if (coord.isVertical) {
+                avatarRepository.addLight("light" + i.getAndIncrement(), 4, greenLight, coord.x, coord.y);
+            } else {
+                avatarRepository.addLight("light" + i.getAndIncrement(), 5, redLight, coord.x, coord.y);
+            }
         });
     }
 

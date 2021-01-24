@@ -2,6 +2,7 @@ package ca.onepoint.yul.controller;
 
 import ca.onepoint.yul.dto.AvatarDto;
 import ca.onepoint.yul.entity.Coord;
+import ca.onepoint.yul.entity.LightCoord;
 import ca.onepoint.yul.service.IAvatarService;
 import ca.onepoint.yul.util.MoveUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -59,7 +60,7 @@ public class AvatarController {
 
     @CrossOrigin
     @PutMapping("/reset-lights")
-    public ResponseEntity resetLights(@RequestBody ArrayList<Coord> coords) {
+    public ResponseEntity resetLights(@RequestBody ArrayList<LightCoord> coords) {
         if (coords.size() > 0) {
             iAvatarService.resetLights(coords);
             return ResponseEntity.ok().build();
