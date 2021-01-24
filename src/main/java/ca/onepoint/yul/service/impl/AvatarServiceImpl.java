@@ -25,8 +25,6 @@ public class AvatarServiceImpl implements IAvatarService {
     @Override
     public List<AvatarDto> getAllAvatars() {
         List<Avatar> result = new ArrayList<>();
-        avatarRepository.removePedestrians();
-        PlacementUtil.addPietons(avatarRepository, 15);
         avatarRepository.findAll().forEach(result::add);
         return mapAvatarToDto(result);
     }
@@ -34,6 +32,11 @@ public class AvatarServiceImpl implements IAvatarService {
     @Override
     public List<AvatarDto> getAvatarsByType(Integer type) {
         return mapAvatarToDto(avatarRepository.findByType(type));
+    }
+
+    public void resetAvatars() {
+        avatarRepository.removePedestrians();
+        PlacementUtil.addPietons(avatarRepository, 15);
     }
 
     private List<AvatarDto> mapAvatarToDto(List<Avatar> avatarIterable) {

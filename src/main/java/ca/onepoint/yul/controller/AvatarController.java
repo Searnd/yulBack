@@ -49,6 +49,12 @@ public class AvatarController {
     }
 
     @CrossOrigin
+    @PutMapping("/reset-avatars")
+    public void resetAvatars() {
+        iAvatarService.resetAvatars();
+    }
+
+    @CrossOrigin
     @GetMapping("/{type}")
     public List<AvatarDto> findAvatarsByType(@PathVariable Integer type) {
         return iAvatarService.getAvatarsByType(type);
