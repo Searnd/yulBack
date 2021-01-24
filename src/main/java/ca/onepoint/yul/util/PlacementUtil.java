@@ -23,16 +23,18 @@ public class PlacementUtil {
     }
 
     /**
-    * Add the specified number of pietons
+    * Add the specified number of elements
     * @param repo the avatar repository
     * @param numberToAdd the number of pietons to add
+    * @param type the type of the element
     * */
-    public static void addPietons(AvatarRepository repo, Integer numberToAdd) {
+    public static void addElement(AvatarRepository repo, Integer numberToAdd, Integer type) {
         for (int i = 0; i < numberToAdd; i++) {
-            String pietonName = "pieton" + i;
+            String name = type.toString() + i;
             Coord startCoords = PlacementUtil.getRandomCoord();
             Coord destCoords = PlacementUtil.getRandomCoord();
-            repo.addPedestrian(pietonName, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
+            if (4 == type) repo.addPedestrian(name, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
+            else repo.addCar(name, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
         }
     }
 }
