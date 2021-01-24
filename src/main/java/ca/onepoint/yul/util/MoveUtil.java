@@ -40,6 +40,7 @@ public class MoveUtil {
                 avatarDto.setXdest(newDest.x);
                 avatarDto.setYdest(newDest.y);
                 MoveUtil.coronaDestinations.remove(0);
+                return;
             }
         }
         Coord dist = MoveUtil.calcDistance(avatarDto);
