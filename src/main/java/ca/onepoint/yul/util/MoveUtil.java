@@ -53,7 +53,7 @@ public class MoveUtil {
      * @param avatarDto the avatar
      * */
     public static void move(AvatarDto avatarDto, List<MapDto> mapDtos) {
-        if (avatarDto.getType().equals(1)) {
+        if (avatarDto.getType().equals(7)) {
             if (
                     MoveUtil.coronaDestinations.size() > 0 &&
                             avatarDto.getX().equals(avatarDto.getXdest()) &&

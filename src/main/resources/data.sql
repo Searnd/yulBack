@@ -33,7 +33,7 @@ CREATE TABLE type
 
 INSERT INTO avatar (name, type, image, waiting, main, x, y, xdest, ydest)
 values
-('corona', 1, '../assets/images/avatar.png', 1, 1, 9, 9, 9, 9),
+('corona', 7, '../assets/images/avatar.png', 1, 1, 9, 9, 9, 9),
 ('agent', 2, '../assets/images/police.png', 1, 0, 23, 3, 0, 0),
 ('pieton', 3, '../assets/images/pieton.png', 1, 0, 28, 3, 0, 0);
 
@@ -42,4 +42,4 @@ values ('Montreal', '[[{"value":"0","image":"../assets/images/toit.png"},{"value
 
 
 INSERT INTO type(name)
-values ('principal'), ('police'), ('pieton'), ('lightvert'), ('lighthor');
+values ('principal'), ('police'), ('pieton'), ('lightvert'), ('lighthor'), ('voituresport'), ('corona');
