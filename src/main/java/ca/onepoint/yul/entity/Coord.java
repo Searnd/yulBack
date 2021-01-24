@@ -7,11 +7,11 @@ public class Coord {
         this.x = avatarDto.getX();
         this.y = avatarDto.getY();
     }
-    public Coord(Integer newX, Integer newY) {
+    public Coord(int newX, int newY) {
         this.x = newX;
         this.y = newY;
     }
 
-    public Integer x;
-    public Integer y;
+    public int x;
+    public int y;
 }

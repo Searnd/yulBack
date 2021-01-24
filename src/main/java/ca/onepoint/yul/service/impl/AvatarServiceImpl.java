@@ -4,6 +4,7 @@ import ca.onepoint.yul.dto.AvatarDto;
 import ca.onepoint.yul.entity.Avatar;
 import ca.onepoint.yul.repository.AvatarRepository;
 import ca.onepoint.yul.service.IAvatarService;
+import ca.onepoint.yul.util.PlacementUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -24,7 +25,8 @@ public class AvatarServiceImpl implements IAvatarService {
     @Override
     public List<AvatarDto> getAllAvatars() {
         List<Avatar> result = new ArrayList<>();
-        avatarRepository.addPedestrian("test", 1, 1, 9, 9);
+        avatarRepository.removePedestrians();
+        PlacementUtil.addPietons(avatarRepository, 15);
         avatarRepository.findAll().forEach(result::add);
         return mapAvatarToDto(result);
     }
