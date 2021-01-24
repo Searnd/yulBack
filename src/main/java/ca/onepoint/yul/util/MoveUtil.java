@@ -12,17 +12,30 @@ public class MoveUtil {
 
     public static List<AvatarDto> avatarList;
 
+
+    /**
+     * Resets the array of next destinations
+     * */
     public static void resetCoronaDestinations() {
         MoveUtil.coronaDestinations = new ArrayList<Coord>(
                 Arrays.asList(new Coord(16, 14), new Coord(3, 21), new Coord(13, 18))
         );
     }
 
+    /**
+     * Calculates the absolute distance from the actual position to the destination
+     * @param avatar the avatar to calculate from
+     * */
     static Coord calcDistance(AvatarDto avatar) {
         Integer diffX = avatar.getXdest() - avatar.getX();
         Integer diffY = avatar.getYdest() - avatar.getY();
         return new Coord(diffX, diffY);
     }
+
+    /**
+     * Gets the direction where to head to
+     * @param dist the difference
+     * */
     static Integer getStepFromDistance(Integer dist) {
         if (dist < 0) {
             return -1;
@@ -32,6 +45,11 @@ public class MoveUtil {
         }
         return 0;
     }
+
+    /**
+     * Move the specified avatar
+     * @param avatarDto the avatar
+     * */
     public static void move(AvatarDto avatarDto) {
         if (avatarDto.getType().equals(1)) {
             if (

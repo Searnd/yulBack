@@ -24,6 +24,10 @@ public class AvatarServiceImpl implements IAvatarService, ApplicationListener<Tr
     @Resource
     private AvatarRepository avatarRepository;
 
+    /**
+     * Handle the application event
+     * @param event the event
+     * */
     @Override
     public void onApplicationEvent(TrafficLightEvent event) {
         this._isVerticalGreen = event.getIsVerticalGreen();
@@ -65,11 +69,16 @@ public class AvatarServiceImpl implements IAvatarService, ApplicationListener<Tr
 
     public void resetPietons() {
         avatarRepository.removePedestrians();
-        PlacementUtil.addPietons(avatarRepository, 15);
+        avatarRepository.removeCars();
+        PlacementUtil.addElement(avatarRepository, 15, 4);
+        PlacementUtil.addElement(avatarRepository, 30, 6);
     }
 
     public void resetAvatars(ArrayList<LightCoord> coords) {
         avatarRepository.removeLights();
+        avatarRepository.removeCars();
+        PlacementUtil.addElement(avatarRepository, 15, 4);
+        PlacementUtil.addElement(avatarRepository, 30, 6);
         this.resetPietons();
         AtomicInteger i = new AtomicInteger();
         coords.forEach(coord -> {

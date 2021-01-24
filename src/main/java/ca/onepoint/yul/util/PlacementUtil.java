@@ -12,22 +12,29 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 public class PlacementUtil {
+
+    /**
+     * Generate random coordinates inside the map
+     * */
     public static Coord getRandomCoord() {
         int x = (int) Math.round(Math.random()*29);
         int y = (int) Math.round(Math.random()*29);
         return new Coord(x, y);
     }
 
-    public static void addPietons(AvatarRepository repo, Integer numberToAdd) {
+    /**
+    * Add the specified number of elements
+    * @param repo the avatar repository
+    * @param numberToAdd the number of pietons to add
+    * @param type the type of the element
+    * */
+    public static void addElement(AvatarRepository repo, Integer numberToAdd, Integer type) {
         for (int i = 0; i < numberToAdd; i++) {
-            String pietonName = "pieton" + i;
+            String name = type.toString() + i;
             Coord startCoords = PlacementUtil.getRandomCoord();
             Coord destCoords = PlacementUtil.getRandomCoord();
-            repo.addPedestrian(pietonName, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
+            if (4 == type) repo.addPedestrian(name, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
+            else repo.addCar(name, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
         }
-    }
-
-    public static void addLights(AvatarRepository repo) {
-
     }
 }
