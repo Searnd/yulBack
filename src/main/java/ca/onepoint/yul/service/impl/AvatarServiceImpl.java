@@ -24,6 +24,7 @@ public class AvatarServiceImpl implements IAvatarService {
     @Override
     public List<AvatarDto> getAllAvatars() {
         List<Avatar> result = new ArrayList<>();
+        avatarRepository.addPedestrian("test", 1, 1, 9, 9);
         avatarRepository.findAll().forEach(result::add);
         return mapAvatarToDto(result);
     }
