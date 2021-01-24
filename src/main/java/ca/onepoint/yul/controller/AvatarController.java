@@ -1,9 +1,8 @@
 package ca.onepoint.yul.controller;
 
 import ca.onepoint.yul.dto.AvatarDto;
-import ca.onepoint.yul.entity.Coord;
 import ca.onepoint.yul.service.IAvatarService;
-import ca.onepoint.yul.service.IMoveService;
+import ca.onepoint.yul.util.MoveUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -57,7 +56,7 @@ public class AvatarController {
     @CrossOrigin
     @PostMapping("/move-avatars")
     public void moveAvatars(@RequestBody List<AvatarDto> listAvatar) {
-        listAvatar.forEach(IMoveService::move);
+        listAvatar.forEach(MoveUtil::move);
         messagingTemplate.convertAndSend("/topic/progress", listAvatar);
     }
 

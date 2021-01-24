@@ -1,9 +1,9 @@
-package ca.onepoint.yul.service;
+package ca.onepoint.yul.util;
 
 import ca.onepoint.yul.dto.AvatarDto;
 import ca.onepoint.yul.entity.Coord;
 
-public interface IMoveService {
+public class MoveUtil {
     static Coord calcDistance(AvatarDto avatar) {
         Integer diffX = avatar.getXdest() - avatar.getX();
         Integer diffY = avatar.getYdest() - avatar.getY();
@@ -18,8 +18,8 @@ public interface IMoveService {
         }
         return 0;
     }
-    static void move(AvatarDto avatarDto) {
-        Coord dist = IMoveService.calcDistance(avatarDto);
+    public static void move(AvatarDto avatarDto) {
+        Coord dist = MoveUtil.calcDistance(avatarDto);
         dist.x = getStepFromDistance(dist.x);
         dist.y = getStepFromDistance(dist.y);
         if (dist.x > 0 || dist.y > 0) {
