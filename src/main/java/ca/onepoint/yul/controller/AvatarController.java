@@ -5,12 +5,15 @@ import ca.onepoint.yul.entity.Coord;
 import ca.onepoint.yul.entity.LightCoord;
 import ca.onepoint.yul.event.TrafficLightEvent;
 import ca.onepoint.yul.service.IAvatarService;
+import ca.onepoint.yul.service.IMapService;
 import ca.onepoint.yul.util.MoveUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.http.ResponseEntity;
@@ -23,15 +26,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/avatar")
-public class AvatarController implements ApplicationListener<TrafficLightEvent> {
-
-    @Override
-    public void onApplicationEvent(TrafficLightEvent event) {
-//        messagingTemplate.convertAndSend("/topic/progress", MoveUtil.avatarList);
-    }
+public class AvatarController {
 
     @Resource
     private IAvatarService iAvatarService;
+    @Resource
+    private IMapService iMapService;
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
@@ -81,9 +81,18 @@ public class AvatarController implements ApplicationListener<TrafficLightEvent> 
         if (MoveUtil.avatarList == null && listAvatar.size() > 0) {
             MoveUtil.avatarList = listAvatar;
         }
-        MoveUtil.avatarList.forEach(MoveUtil::move);
+        MoveUtil.avatarList.forEach(avatarDto -> {
+            try {
+                MoveUtil.move(avatarDto, iMapService.
+                        getAllMap());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            } catch (org.springframework.boot.configurationprocessor.json.JSONException e) {
+                e.printStackTrace();
+            }
+        });
         messagingTemplate.convertAndSend("/topic/progress", MoveUtil.avatarList);
     }
-
-
 }
