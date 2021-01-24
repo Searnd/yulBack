@@ -12,12 +12,21 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Pattern;
 
 public class PlacementUtil {
+
+    /**
+     * Generate random coordinates inside the map
+     * */
     public static Coord getRandomCoord() {
         int x = (int) Math.round(Math.random()*29);
         int y = (int) Math.round(Math.random()*29);
         return new Coord(x, y);
     }
 
+    /**
+    * Add the specified number of pietons
+    * @param repo the avatar repository
+    * @param numberToAdd the number of pietons to add
+    * */
     public static void addPietons(AvatarRepository repo, Integer numberToAdd) {
         for (int i = 0; i < numberToAdd; i++) {
             String pietonName = "pieton" + i;
@@ -25,9 +34,5 @@ public class PlacementUtil {
             Coord destCoords = PlacementUtil.getRandomCoord();
             repo.addPedestrian(pietonName, startCoords.x, startCoords.y, destCoords.x, destCoords.y);
         }
-    }
-
-    public static void addLights(AvatarRepository repo) {
-
     }
 }
