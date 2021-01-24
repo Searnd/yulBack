@@ -2,13 +2,16 @@ package ca.onepoint.yul.controller;
 
 import ca.onepoint.yul.dto.AvatarDto;
 import ca.onepoint.yul.service.IAvatarService;
+import ca.onepoint.yul.service.IMapService;
 import ca.onepoint.yul.util.MoveUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +24,8 @@ public class AvatarController {
 
     @Resource
     private IAvatarService iAvatarService;
+    @Resource
+    private IMapService iMapService;
 
     @Autowired
     private SimpMessageSendingOperations messagingTemplate;
@@ -56,7 +61,15 @@ public class AvatarController {
     @CrossOrigin
     @PostMapping("/move-avatars")
     public void moveAvatars(@RequestBody List<AvatarDto> listAvatar) {
-        listAvatar.forEach(MoveUtil::move);
+        listAvatar.forEach(avatarDto -> {
+            try {
+                MoveUtil.move(avatarDto, iMapService.getAllMap());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+        });
         messagingTemplate.convertAndSend("/topic/progress", listAvatar);
     }
 

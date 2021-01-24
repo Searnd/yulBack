@@ -1,10 +1,13 @@
 package ca.onepoint.yul.util;
 
 import ca.onepoint.yul.dto.AvatarDto;
+import ca.onepoint.yul.dto.MapDto;
+import ca.onepoint.yul.dto.SquareDto;
 import ca.onepoint.yul.entity.Coord;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MoveUtil {
     static ArrayList<Coord> coronaDestinations = new ArrayList<Coord>(
@@ -25,8 +28,8 @@ public class MoveUtil {
         }
         return 0;
     }
-    public static void move(AvatarDto avatarDto) {
-        if (avatarDto.getType().equals(1)) {
+    public static void move(AvatarDto avatarDto, List<MapDto> mapDtos) {
+        if (avatarDto.getType() == 0) { // CORONA
             if (
                     MoveUtil.coronaDestinations.size() > 0 &&
                             avatarDto.getX().equals(avatarDto.getXdest()) &&
@@ -42,17 +45,35 @@ public class MoveUtil {
         dist.x = getStepFromDistance(dist.x);
         dist.y = getStepFromDistance(dist.y);
         if (dist.x != 0 || dist.y != 0) {
-            if (dist.x == 0) {
-                avatarDto.setY(dist.y + avatarDto.getY());
-            } else if (dist.y == 0) {
-                avatarDto.setX(dist.x + avatarDto.getX());
+            int nextX = dist.x + avatarDto.getX();
+            int nextY = dist.y + avatarDto.getY();
+            if (isOverSteppable(nextX, nextY, avatarDto.getType(), mapDtos)) {
+                moveAvatarToNextSquare(avatarDto, dist, nextX, nextY);
+            }
+        }
+    }
+
+    private static void moveAvatarToNextSquare(AvatarDto avatarDto, Coord dist, int nextX, int nextY) {
+        if (dist.x == 0) {
+            avatarDto.setY(nextY);
+        } else {
+            if (dist.y == 0) {
+                avatarDto.setX(nextX);
             } else {
                 if (Math.random() > 0.5) {
-                    avatarDto.setX(dist.x + avatarDto.getX());
+                    avatarDto.setX(nextX);
                 } else {
-                    avatarDto.setY(dist.y + avatarDto.getY());
+                    avatarDto.setY(nextY);
                 }
             }
         }
+    }
+
+    public static boolean isOverSteppable(int nextX, int nextY, int avatarType, List<MapDto> mapDtos) {
+        if (avatarType == 1) {
+            SquareDto[][] squareDtos = mapDtos.get(0).getSquare();
+            return squareDtos[nextX][nextY].getValue() == 1;
+        }
+        return true;
     }
 }
