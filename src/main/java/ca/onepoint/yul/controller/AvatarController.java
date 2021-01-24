@@ -3,6 +3,7 @@ package ca.onepoint.yul.controller;
 import ca.onepoint.yul.dto.AvatarDto;
 import ca.onepoint.yul.entity.Coord;
 import ca.onepoint.yul.entity.LightCoord;
+import ca.onepoint.yul.event.TrafficLightEvent;
 import ca.onepoint.yul.service.IAvatarService;
 import ca.onepoint.yul.util.MoveUtil;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/avatar")
-public class AvatarController {
+public class AvatarController implements ApplicationListener<TrafficLightEvent> {
+
+    @Override
+    public void onApplicationEvent(TrafficLightEvent event) {
+//        messagingTemplate.convertAndSend("/topic/progress", MoveUtil.avatarList);
+    }
 
     @Resource
     private IAvatarService iAvatarService;
@@ -77,8 +84,11 @@ public class AvatarController {
     @CrossOrigin
     @PostMapping("/move-avatars")
     public void moveAvatars(@RequestBody List<AvatarDto> listAvatar) {
-        listAvatar.forEach(MoveUtil::move);
-        messagingTemplate.convertAndSend("/topic/progress", listAvatar);
+        if (MoveUtil.avatarList == null && listAvatar.size() > 0) {
+            MoveUtil.avatarList = listAvatar;
+        }
+        MoveUtil.avatarList.forEach(MoveUtil::move);
+        messagingTemplate.convertAndSend("/topic/progress", MoveUtil.avatarList);
     }
 
 

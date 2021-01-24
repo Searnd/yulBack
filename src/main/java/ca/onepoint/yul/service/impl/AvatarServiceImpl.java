@@ -4,21 +4,41 @@ import ca.onepoint.yul.dto.AvatarDto;
 import ca.onepoint.yul.entity.Avatar;
 import ca.onepoint.yul.entity.Coord;
 import ca.onepoint.yul.entity.LightCoord;
+import ca.onepoint.yul.event.TrafficLightEvent;
 import ca.onepoint.yul.repository.AvatarRepository;
 import ca.onepoint.yul.service.IAvatarService;
+import ca.onepoint.yul.util.MoveUtil;
 import ca.onepoint.yul.util.PlacementUtil;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 
 @Service(value = "AvatarService")
-public class AvatarServiceImpl implements IAvatarService {
+public class AvatarServiceImpl implements IAvatarService, ApplicationListener<TrafficLightEvent> {
 
     @Resource
     private AvatarRepository avatarRepository;
+
+    @Override
+    public void onApplicationEvent(TrafficLightEvent event) {
+        this._isVerticalGreen = event.getIsVerticalGreen();
+        String redLight = "../assets/images/red-light.png";
+        String greenLight = "../assets/images/green-light.png";
+        if (MoveUtil.avatarList != null) {
+            MoveUtil.avatarList.forEach(avatarDto -> {
+                if (Pattern.compile(redLight).matcher(avatarDto.getImage()).find()) {
+                    avatarDto.setImage(greenLight);
+                } else if (Pattern.compile(greenLight).matcher(avatarDto.getImage()).find()) {
+                    avatarDto.setImage(redLight);
+                }
+            });
+        }
+    }
 
     @Override
     public AvatarDto getAvatarById(Integer id) {
@@ -56,9 +76,9 @@ public class AvatarServiceImpl implements IAvatarService {
             String redLight = "../assets/images/red-light.png";
             String greenLight = "../assets/images/green-light.png";
             if (coord.isVertical) {
-                avatarRepository.addLight("light" + i.getAndIncrement(), 4, greenLight, coord.x, coord.y);
+                avatarRepository.addLight("light" + i.getAndIncrement(), 4, this._isVerticalGreen ? greenLight : redLight, coord.x, coord.y);
             } else {
-                avatarRepository.addLight("light" + i.getAndIncrement(), 5, redLight, coord.x, coord.y);
+                avatarRepository.addLight("light" + i.getAndIncrement(), 5, this._isVerticalGreen ? redLight : greenLight, coord.x, coord.y);
             }
         });
     }
@@ -81,4 +101,6 @@ public class AvatarServiceImpl implements IAvatarService {
         }
         return avatarDtoList;
     }
+
+    private boolean _isVerticalGreen;
 }

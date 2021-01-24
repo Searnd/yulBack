@@ -5,9 +5,12 @@ import ca.onepoint.yul.entity.Coord;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MoveUtil {
     static ArrayList<Coord> coronaDestinations;
+
+    public static List<AvatarDto> avatarList;
 
     public static void resetCoronaDestinations() {
         MoveUtil.coronaDestinations = new ArrayList<Coord>(
